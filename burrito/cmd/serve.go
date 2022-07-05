@@ -128,6 +128,9 @@ func printContents(root, url string) {
 func preflightCheck(mc utils.BurritoConfig) bool {
 	ok := true
 	for _, c := range mc.Components {
+		if strings.HasPrefix(c.Source, "projects"){
+			continue
+		}
 		path, err := os.Getwd()
 		if err != nil {
 			log.Println(err)

@@ -26,6 +26,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -44,6 +45,9 @@ var buildCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 		for _, c := range mc.Components {
+			if strings.HasPrefix(c.Source, "projects"){
+				continue
+			}
 			path, err := os.Getwd()
 			if err != nil {
 				cmd.Println(err)
